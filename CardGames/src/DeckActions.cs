@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using CardGames.Classes;
+using CardGames.src.Classes;
 
 namespace CardGames
 {
     public class DeckActions
     {
+        //Create Deck
         public Deck CreateDeck()
         {
             Deck deck = new Deck();
@@ -15,6 +17,7 @@ namespace CardGames
                 Value = 2
             };
 
+            //Create Number Cards 2-10 of All Suits
             List<Card> createNumberCards()
             {
                 List<Card> cards = new List<Card>();
@@ -61,6 +64,7 @@ namespace CardGames
                 return cards;
             }
 
+            //Create Picture Cards and Aces of All Suits
             List<Card> createPicturesAndAces()
             {
                 List<Card> picturesAndAces = new List<Card>();
@@ -115,14 +119,16 @@ namespace CardGames
                 return picturesAndAces;
             }
 
+            //Put It All Together
             deck.Cards = createNumberCards();
-
             createPicturesAndAces().ForEach(card =>
             {
                 deck.Cards.Add(card);
             });
             return deck;
         }
+
+        //Shuffle Deck
         public Deck Shuffle(Deck deck)
         {
             Random rnd = new Random();
@@ -136,6 +142,42 @@ namespace CardGames
             }
 
             return deck;
+        }
+
+        //Deal Cards
+        public void Deal(Game game, Deck deck)
+        {
+
+            List<Player> playerList = new List<Player>();
+
+                Player player = new Player();
+                Card jackOfHearts = new Card()
+                {
+                    Name = "Jack",
+                    Value = 10,
+                    Suit = "Hearts"
+                };
+                Card twoOfClubs = new Card()
+                {
+                    Name = "2",
+                    Value = 2,
+                    Suit = "Clubs"
+                };
+                List<Card> cards = new List<Card>();
+                cards.Add(jackOfHearts);
+                cards.Add(twoOfClubs);
+
+                player.CardsInPlay = cards;
+                playerList.Add(player);
+
+            playerList.ForEach(player =>
+            {
+                player.CardsInPlay.ForEach(card =>
+                {
+                    Console.WriteLine(card.Name);
+                });
+                Console.WriteLine(player.PointsInPlay);
+            });
         }
     }
 }

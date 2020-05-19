@@ -1,4 +1,6 @@
 ﻿using System;
+using CardGames.Classes;
+
 namespace CardGames
 {
     class Program
@@ -21,22 +23,26 @@ namespace CardGames
             DisplayBanner();
 
             DeckActions deckActions = new DeckActions();
+            Game game = new Game();
             Deck newDeck = deckActions.CreateDeck();
 
-            deckActions.Shuffle(newDeck);
+            //deckActions.Shuffle(newDeck);
+            deckActions.Deal(game, newDeck);
 
-            int counter = 0;
-            newDeck.Cards.ForEach(card =>
-            {
-                Console.WriteLine($"{card.Name}, {card.Suit}");
-                counter += 1;
-            });
+            //int counter = 0;
+            //newDeck.Cards.ForEach(card =>
+            //{
+            //    Console.WriteLine($"{card.Name}, {card.Suit}");
+            //    counter += 1;
+            //});
 
-            Console.WriteLine(counter);
+            //Console.WriteLine(counter);
 
             
                 Console.Write("Press Enter To Return To Main Menu");
                 Console.ReadLine();
             }
+
+            
         }
     }

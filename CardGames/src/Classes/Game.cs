@@ -9,7 +9,7 @@ namespace CardGames.Classes
         {
         }
         public string Name { get; set; }
-        public List<Rule> Rules { get; set; }
-
+        public int NumberOfPlayers { get; set; }
+        public int StartingNumberOfCards { get; set; }
     }
 }
