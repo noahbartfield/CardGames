@@ -11,6 +11,7 @@ namespace CardGames.src.Classes
         {
             IsWinner = false;
         }
+        public string Name { get; set; }
         public List<Card> Hand { get; set; }
         public List<Card> CardsInPlay { get; set; }
         public int PointsInPlay

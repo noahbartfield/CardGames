@@ -10,6 +10,8 @@ namespace CardGames
         //Create Deck
         public Deck CreateDeck()
         {
+            Console.WriteLine("CreateDeck");
+
             Deck deck = new Deck();
             Card two = new Card()
             {
@@ -131,12 +133,14 @@ namespace CardGames
         //Shuffle Deck
         public Deck Shuffle(Deck deck)
         {
+            Console.WriteLine("Shuffle");
+
             Random rnd = new Random();
 
             for (int i = 0; i < rnd.Next(52, 300); i++)
             {
-                int fiftyTwo = rnd.Next(52);
-                Card randomCard = deck.Cards[fiftyTwo];
+                int random = rnd.Next(52);
+                Card randomCard = deck.Cards[random];
                 deck.Cards.Remove(randomCard);
                 deck.Cards.Add(randomCard);
             }
@@ -144,40 +148,57 @@ namespace CardGames
             return deck;
         }
 
-        //Deal Cards
-        public void Deal(Game game, Deck deck)
+        //Create Players
+        public List<Player> CreatePlayers(Game game)
         {
+            Console.WriteLine("CreatePlayers");
 
             List<Player> playerList = new List<Player>();
 
-                Player player = new Player();
-                Card jackOfHearts = new Card()
+            for (int i = 0; i < game.NumberOfPlayers; i++)
+            {
+                Player player = new Player()
                 {
-                    Name = "Jack",
-                    Value = 10,
-                    Suit = "Hearts"
+                    Name = $"Player {i + 1}"
                 };
-                Card twoOfClubs = new Card()
-                {
-                    Name = "2",
-                    Value = 2,
-                    Suit = "Clubs"
-                };
-                List<Card> cards = new List<Card>();
-                cards.Add(jackOfHearts);
-                cards.Add(twoOfClubs);
-
-                player.CardsInPlay = cards;
                 playerList.Add(player);
+            }
+            return playerList;
+        }
+
+        //Deal Cards
+        public void Deal(Game game, Deck deck, List<Player> playerList)
+        {
+            Console.WriteLine("Deal");
+
+            Deck shuffledDeck = deck.Cards.Count == 52 ? Shuffle(deck) : deck;
 
             playerList.ForEach(player =>
             {
-                player.CardsInPlay.ForEach(card =>
+                for (int i = 0; i < game.StartingNumberOfCards; i++)
+                {
+                    Card index0 = shuffledDeck.Cards[0];
+                    shuffledDeck.Cards.Remove(index0);
+                    if (player.Hand == null)
+                    {
+                        player.Hand = new List<Card>();
+                    }
+                    player.Hand.Add(index0);
+                }
+            });
+
+            playerList.ForEach(player =>
+            {
+                player.Hand.ForEach(card =>
                 {
                     Console.WriteLine(card.Name);
+                    Console.WriteLine(card.Color);
+                    Console.WriteLine(card.Suit);
+                    Console.WriteLine(player.Name);
                 });
-                Console.WriteLine(player.PointsInPlay);
             });
+
+            Console.WriteLine(shuffledDeck.Cards.Count);
         }
     }
 }

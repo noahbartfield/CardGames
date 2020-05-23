@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using CardGames.Classes;
+using CardGames.src.Classes;
 
 namespace CardGames
 {
@@ -24,19 +26,17 @@ namespace CardGames
 
             DeckActions deckActions = new DeckActions();
             Game game = new Game();
+            game.NumberOfPlayers = 4;
+            game.StartingNumberOfCards = 2;
             Deck newDeck = deckActions.CreateDeck();
 
-            //deckActions.Shuffle(newDeck);
-            deckActions.Deal(game, newDeck);
+            List<Player> playerList = deckActions.CreatePlayers(game);
 
-            //int counter = 0;
-            //newDeck.Cards.ForEach(card =>
-            //{
-            //    Console.WriteLine($"{card.Name}, {card.Suit}");
-            //    counter += 1;
-            //});
+            Console.WriteLine("First Deal");
+            deckActions.Deal(game, newDeck, playerList);
 
-            //Console.WriteLine(counter);
+            Console.WriteLine("Second Deal");
+            deckActions.Deal(game, newDeck, playerList);
 
             
                 Console.Write("Press Enter To Return To Main Menu");
